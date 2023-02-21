@@ -28,21 +28,35 @@ public class Main {
         //Add place -> Update place with new address -> Get place to validate if new address is present in response
         System.out.println(response);
 
-        JsonPath js = new JsonPath(response); //for parsing Json
-        String placeId = js.getString("place_id");
-        System.out.println(placeId);
+        JsonPath jsonPath1 = new JsonPath(response); //for parsing Json
+        String placeId = jsonPath1.getString("place_id");
+        System.out.println("placeId = " + placeId);
 
         //Update place
+        String newAddress = "Summer Walk, Africa";
+
         given().log().all().queryParam("key", "qaclick123")
                 .header("Content-Type", "application/json")
                 .body("{\n" +
                         "\"place_id\":\"" + placeId + "\",\n" +
-                        "\"address\":\"70 Summer walk, USA\",\n" +
+                        "\"address\":\"" + newAddress + "\",\n" +
                         "\"key\":\"qaclick123\"\n" +
                         "}\n")
                 .when().put("/maps/api/place/update/json")
                 .then().assertThat().log().all().statusCode(200)
                 .body("msg", equalTo("Address successfully updated"));
+
+        //Get place
+        String getPlaceResponse = given().log().all()
+                .queryParam("key", "qaclick123")
+                .queryParam("place_id", placeId)
+                .when().get("maps/api/place/get/json")
+                .then().assertThat().log().all().statusCode(200)
+                .extract().response().asString();
+
+        JsonPath jsonPath2 = new JsonPath(getPlaceResponse);
+        String actualAddress = jsonPath2.getString("address");
+        System.out.println("actualAddress = " + actualAddress);
 
     }
 }
