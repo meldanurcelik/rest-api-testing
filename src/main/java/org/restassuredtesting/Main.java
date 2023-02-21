@@ -2,6 +2,7 @@ package org.restassuredtesting;
 
 import io.restassured.RestAssured;
 import io.restassured.path.json.JsonPath;
+import org.testng.Assert;
 
 import static io.restassured.RestAssured.*;
 import static org.hamcrest.Matchers.equalTo;
@@ -54,9 +55,10 @@ public class Main {
                 .then().assertThat().log().all().statusCode(200)
                 .extract().response().asString();
 
-        JsonPath jsonPath2 = new JsonPath(getPlaceResponse);
+        JsonPath jsonPath2 = ReUsableMethods.rawToJson(getPlaceResponse);
         String actualAddress = jsonPath2.getString("address");
         System.out.println("actualAddress = " + actualAddress);
 
+        Assert.assertEquals(actualAddress, newAddress);
     }
 }
