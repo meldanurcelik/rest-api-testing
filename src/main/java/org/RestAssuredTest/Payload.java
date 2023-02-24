@@ -1,4 +1,4 @@
-package org.restassuredtesting;
+package org.RestAssuredTest;
 
 public class Payload {
 

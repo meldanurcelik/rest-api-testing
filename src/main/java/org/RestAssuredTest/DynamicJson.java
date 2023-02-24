@@ -1,14 +1,10 @@
-package org.restassuredtesting;
+package org.RestAssuredTest;
 
 import io.restassured.RestAssured;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 
 import static io.restassured.RestAssured.given;
 

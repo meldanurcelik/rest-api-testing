@@ -1,4 +1,4 @@
-package org.restassuredtesting;
+package org.RestAssuredTest;
 
 import io.restassured.path.json.JsonPath;
 
